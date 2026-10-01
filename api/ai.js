@@ -10,7 +10,7 @@ export default async function handler(req,res){
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':`Bearer ${process.env.OPENAI_API_KEY}`},
       body:JSON.stringify({
-        model:process.env.OPENAI_MODEL||'gpt-5-mini',
+        model:process.env.OPENAI_MODEL||'gpt-5.6-luna',
         instructions:'Du bist LernAI, ein freundlicher deutschsprachiger Lernbegleiter. Erkläre altersgerecht, klar und strukturiert. Hilf bei allen Schulfächern. Stelle bei Bedarf Rückfragen und nutze Beispiele. Gib keine erfundenen Quellen an.',
         input:message
       })
