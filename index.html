@@ -1,114 +1,14 @@
 <!doctype html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b1020">
-  <title>LernAI – Dein KI-Lernbegleiter</title>
-  <meta name="description" content="Interaktive KI-Lernplattform für alle Fächer.">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="app-shell">
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="brand-mark">L</div>
-        <div><strong>LernAI</strong><span>Dein Lernbegleiter</span></div>
-      </div>
-      <button class="new-chat" id="newChatBtn">＋ Neuer Lernchat</button>
-      <nav>
-        <button class="nav-item active" data-view="chat">💬 Lernchat</button>
-        <button class="nav-item" data-view="worksheets">📄 Arbeitsblätter</button>
-        <button class="nav-item" data-view="quiz">🧠 Quiz</button>
-        <button class="nav-item" data-view="saved">⭐ Gespeichert</button>
-      </nav>
-      <div class="sidebar-bottom">
-        <div class="progress-card"><span>Heute gelernt</span><strong id="studyMinutes">0 Min.</strong><div class="progress"><i id="studyProgress"></i></div></div>
-        <button class="nav-item" id="themeBtn">◐ Erscheinungsbild</button>
-      </div>
-    </aside>
-
-    <main class="main">
-      <header class="topbar">
-        <button class="icon-btn mobile-menu" id="menuBtn">☰</button>
-        <div class="breadcrumbs" id="viewTitle">Lernchat</div>
-        <div class="top-actions"><span class="status-dot"></span><span>KI bereit</span></div>
-      </header>
-
-      <section class="view active" id="chatView">
-        <div class="chat-layout">
-          <div class="chat-panel">
-            <div class="chat-messages" id="messages">
-              <div class="welcome">
-                <div class="sparkle">✦</div>
-                <h1>Was möchtest du heute lernen?</h1>
-                <p>Frag mich etwas, lass dir ein Thema erklären, erstelle ein Arbeitsblatt oder starte direkt ein Quiz.</p>
-                <div class="prompt-grid">
-                  <button data-prompt="Erkläre mir Photosynthese einfach und mit einem Beispiel.">🌱 Photosynthese erklären</button>
-                  <button data-prompt="Erstelle mir ein Quiz über Bruchrechnung für die Schule.">➗ Bruchrechnung üben</button>
-                  <button data-prompt="Erkläre mir die Ursachen der Französischen Revolution.">📚 Geschichte lernen</button>
-                  <button data-prompt="Erstelle ein Arbeitsblatt zu englischen Zeiten.">🇬🇧 Englisch üben</button>
-                </div>
-              </div>
-            </div>
-            <div class="composer-wrap">
-              <div class="quick-tools">
-                <button data-action="worksheet">📄 Arbeitsblatt</button>
-                <button data-action="quiz">🧠 Quiz</button>
-                <button data-action="explain">✨ Einfach erklären</button>
-              </div>
-              <form class="composer" id="chatForm">
-                <textarea id="chatInput" rows="1" placeholder="Frag mich alles, was du lernen möchtest …"></textarea>
-                <button class="send-btn" type="submit">➤</button>
-              </form>
-              <small>Die KI unterstützt dich beim Lernen – überprüfe wichtige Angaben immer mit deinen Lernunterlagen.</small>
-            </div>
-          </div>
-          <aside class="context-panel">
-            <div class="panel-title">Lernwerkzeuge</div>
-            <button class="tool-card" data-action="worksheet"><b>📄 Arbeitsblatt erstellen</b><span>Aufgabe, Thema und Schwierigkeit frei wählen.</span></button>
-            <button class="tool-card" data-action="quiz"><b>🧠 Interaktives Quiz</b><span>Fragen beantworten und direkt Feedback erhalten.</span></button>
-            <button class="tool-card" data-action="graph"><b>📊 Grafik erstellen</b><span>Zusammenhänge visuell darstellen.</span></button>
-            <div class="tip"><b>💡 Lerntipp</b><p id="tipText">Lass dir ein Thema zuerst einfach erklären und teste dich danach mit einem Quiz.</p></div>
-          </aside>
-        </div>
-      </section>
-
-      <section class="view" id="worksheetsView">
-        <div class="page-head"><div><span class="eyebrow">DEINE MATERIALIEN</span><h2>Arbeitsblätter</h2><p>Erstellen, bearbeiten, speichern und exportieren.</p></div><button class="primary" id="createWorksheet">＋ Neues Arbeitsblatt</button></div>
-        <div class="cards" id="worksheetList"></div>
-      </section>
-
-      <section class="view" id="quizView">
-        <div class="page-head"><div><span class="eyebrow">AKTIV LERNEN</span><h2>Quiz</h2><p>Teste dein Wissen und bekomme sofort Feedback.</p></div><button class="primary" id="createQuiz">＋ Quiz starten</button></div>
-        <div id="quizArea" class="quiz-area"></div>
-      </section>
-
-      <section class="view" id="savedView">
-        <div class="page-head"><div><span class="eyebrow">DEINE SAMMLUNG</span><h2>Gespeichert</h2><p>Alles, was du später weiterlernen möchtest.</p></div></div>
-        <div class="cards" id="savedList"></div>
-      </section>
-    </main>
-  </div>
-
-  <dialog id="worksheetDialog">
-    <form method="dialog" class="modal-form" id="worksheetForm">
-      <button class="close" value="cancel">×</button><span class="eyebrow">NEUES MATERIAL</span><h2>Arbeitsblatt erstellen</h2>
-      <label>Thema<input id="wsTopic" required placeholder="z. B. lineare Funktionen"></label>
-      <div class="two-col"><label>Fach<select id="wsSubject"><option>Mathematik</option><option>Deutsch</option><option>Englisch</option><option>Biologie</option><option>Physik</option><option>Geschichte</option><option>Geografie</option><option>Chemie</option><option>Informatik</option><option>Sonstiges</option></select></label><label>Schwierigkeit<select id="wsLevel"><option>Leicht</option><option>Mittel</option><option>Schwer</option></select></label></div>
-      <label>Anzahl Aufgaben<input id="wsCount" type="number" min="1" max="30" value="8"></label>
-      <button class="primary full" type="submit">Arbeitsblatt erstellen</button>
-    </form>
-  </dialog>
-
-  <dialog id="editorDialog">
-    <div class="editor">
-      <header><input id="editorTitle" value="Arbeitsblatt"><div><button class="secondary" id="saveEditor">Speichern</button><button class="secondary" id="exportEditor">Exportieren</button><button class="close" id="closeEditor">×</button></div></header>
-      <div class="editor-toolbar"><button data-cmd="bold"><b>B</b></button><button data-cmd="italic"><i>I</i></button><button data-cmd="underline"><u>U</u></button><button data-cmd="insertUnorderedList">• Liste</button><button data-cmd="justifyCenter">☷</button></div>
-      <div id="editor" class="document" contenteditable="true"></div>
-    </div>
-  </dialog>
-
-  <script src="app.js"></script>
-</body>
-</html>
+<html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1020"><title>LernAI – KI-Lernplattform</title><meta name="description" content="LernAI – dein interaktiver KI-Lernbegleiter für alle Schulfächer."><link rel="stylesheet" href="styles.css"></head><body>
+<div id="landing" class="landing"><nav class="landing-nav"><div class="brand"><div class="brand-mark">L</div><div><strong>LernAI</strong><span>KI-Lernplattform</span></div></div><button class="primary" id="startLearning">Jetzt lernen</button></nav><div class="hero"><div class="hero-copy"><span class="eyebrow">DEIN DIGITALER LERNBEGLEITER</span><h1>Lernen, das sich <span>an dich anpasst.</span></h1><p>Erklären lassen, üben, Quizze erstellen, Arbeitsblätter bearbeiten und deinen Lernfortschritt verfolgen – alles an einem Ort.</p><div class="hero-actions"><button class="primary" id="startLearning2">Lernbereich öffnen</button><button class="secondary" id="demoBtn">Demo ansehen</button></div><div class="hero-points"><span>✓ Alle Fächer</span><span>✓ Interaktiv</span><span>✓ Deutsch</span></div></div><div class="hero-card"><div class="hero-glow"></div><div class="mini-window"><div class="mini-top"><span>✦ LernAI</span><span>● KI bereit</span></div><div class="mini-msg">Erkläre mir lineare Funktionen einfach.</div><div class="mini-answer"><b>Natürlich!</b><br>Eine lineare Funktion beschreibt einen Zusammenhang, bei dem sich etwas gleichmäßig verändert.<div class="mini-chart"><i></i><i></i><i></i><i></i><i></i></div></div></div></div></div><div class="features"><article><b>✦</b><h3>KI-Tutor</h3><p>Fragen stellen, Schritt für Schritt lernen und Beispiele bekommen.</p></article><article><b>▣</b><h3>Arbeitsblätter</h3><p>Material automatisch erstellen und direkt im Browser bearbeiten.</p></article><article><b>◎</b><h3>Quiz & Fortschritt</h3><p>Wissen testen und sehen, welche Themen du weiter üben solltest.</p></article></div></div>
+<div id="app" class="app-shell hidden"><aside class="sidebar" id="sidebar"><div class="brand"><div class="brand-mark">L</div><div><strong>LernAI</strong><span>Dein Lernbegleiter</span></div></div><button class="new-chat" id="newChatBtn">＋ Neuer Lernchat</button><nav><button class="nav-item active" data-view="dashboard">⌂ Übersicht</button><button class="nav-item" data-view="chat">💬 Lernchat</button><button class="nav-item" data-view="worksheets">📄 Arbeitsblätter</button><button class="nav-item" data-view="quiz">🧠 Quiz</button><button class="nav-item" data-view="saved">⭐ Meine Materialien</button></nav><div class="sidebar-bottom"><div class="progress-card"><span>Heute gelernt</span><strong id="studyMinutes">0 Min.</strong><div class="progress"><i id="studyProgress"></i></div></div><button class="nav-item" id="themeBtn">◐ Erscheinungsbild</button></div></aside><main class="main"><header class="topbar"><button class="icon-btn mobile-menu" id="menuBtn">☰</button><div class="breadcrumbs" id="viewTitle">Übersicht</div><div class="top-actions"><span class="status-dot"></span> KI bereit</div></header>
+<section class="view active" id="dashboardView"><div class="dashboard"><div class="dash-hero"><div><span class="eyebrow">WILLKOMMEN BEI LERNAI</span><h1>Was möchtest du heute lernen?</h1><p>Starte mit einer Frage oder wähle direkt ein Lernwerkzeug.</p></div><div class="dash-orb">✦</div></div><div class="quick-grid"><button data-action="chat"><b>💬 Lernchat</b><span>Alles fragen und verständlich erklären lassen.</span></button><button data-action="worksheet"><b>📄 Arbeitsblatt</b><span>Übungen zu jedem Thema erstellen.</span></button><button data-action="quiz"><b>🧠 Quiz</b><span>Dein Wissen interaktiv testen.</span></button><button data-action="graph"><b>📊 Grafik</b><span>Zusammenhänge visuell darstellen.</span></button></div><div class="dashboard-grid"><div class="panel"><div class="panel-head"><h3>Dein Lernfortschritt</h3><span id="progressLabel">0%</span></div><div class="big-progress"><i id="bigProgress"></i></div><div class="stats"><div><b id="statWorksheets">0</b><span>Arbeitsblätter</span></div><div><b id="statQuiz">0</b><span>Quizze</span></div><div><b id="statMinutes">0</b><span>Lernminuten</span></div></div></div><div class="panel"><div class="panel-head"><h3>Zuletzt gelernt</h3></div><div id="recentList" class="recent-list"><p class="muted">Noch keine Lernaktivität.</p></div></div></div></div></section>
+<section class="view" id="chatView"><div class="chat-layout"><div class="chat-panel"><div class="chat-messages" id="messages"><div class="welcome"><div class="sparkle">✦</div><h1>Was möchtest du lernen?</h1><p>Frag mich etwas, lass dir ein Thema erklären oder erstelle direkt Lernmaterial.</p><div class="prompt-grid"><button data-prompt="Erkläre mir Photosynthese einfach und mit einem Beispiel.">🌱 Photosynthese</button><button data-prompt="Erkläre mir lineare Funktionen Schritt für Schritt.">➗ Lineare Funktionen</button><button data-prompt="Erkläre mir die Ursachen der Französischen Revolution.">📚 Geschichte</button><button data-prompt="Hilf mir bei englischen Zeiten.">🇬🇧 Englisch</button></div></div></div><div class="composer-wrap"><div class="quick-tools"><button data-action="worksheet">📄 Arbeitsblatt</button><button data-action="quiz">🧠 Quiz</button><button data-action="explain">✨ Einfach erklären</button></div><form class="composer" id="chatForm"><textarea id="chatInput" rows="1" placeholder="Frag mich alles, was du lernen möchtest …"></textarea><button class="send-btn" type="submit">➤</button></form><small>KI kann Fehler machen. Prüfe wichtige Angaben mit deinen Lernunterlagen.</small></div></div><aside class="context-panel"><div class="panel-title">Lernwerkzeuge</div><button class="tool-card" data-action="worksheet"><b>📄 Arbeitsblatt erstellen</b><span>Mit KI zu deinem Thema.</span></button><button class="tool-card" data-action="quiz"><b>🧠 Interaktives Quiz</b><span>Fragen, Punkte und Feedback.</span></button><button class="tool-card" data-action="graph"><b>📊 Grafik erstellen</b><span>Diagramme und Lernskizzen.</span></button><div class="tip"><b>💡 Lerntipp</b><p id="tipText">Erst erklären lassen, dann ohne Unterlagen testen.</p></div></aside></div></section>
+<section class="view" id="worksheetsView"><div class="page-head"><div><span class="eyebrow">DEINE MATERIALIEN</span><h2>Arbeitsblätter</h2><p>KI erstellen lassen, bearbeiten, speichern und exportieren.</p></div><button class="primary" id="createWorksheet">＋ Neues Arbeitsblatt</button></div><div class="cards" id="worksheetList"></div></section>
+<section class="view" id="quizView"><div class="page-head"><div><span class="eyebrow">AKTIV LERNEN</span><h2>Quiz</h2><p>Erstelle ein Quiz zu jedem Thema.</p></div><button class="primary" id="createQuiz">＋ Quiz erstellen</button></div><div id="quizArea" class="quiz-area"></div></section>
+<section class="view" id="savedView"><div class="page-head"><div><span class="eyebrow">DEINE SAMMLUNG</span><h2>Meine Materialien</h2><p>Gespeicherte Arbeitsblätter und Lernnotizen.</p></div></div><div class="cards" id="savedList"></div></section>
+</main></div>
+<dialog id="worksheetDialog"><form method="dialog" class="modal-form" id="worksheetForm"><button class="close" value="cancel">×</button><span class="eyebrow">KI-GENERATOR</span><h2>Arbeitsblatt erstellen</h2><label>Thema<input id="wsTopic" required placeholder="z. B. Bruchrechnung"></label><div class="two-col"><label>Fach<select id="wsSubject"><option>Mathematik</option><option>Deutsch</option><option>Englisch</option><option>Biologie</option><option>Physik</option><option>Geschichte</option><option>Geografie</option><option>Chemie</option><option>Informatik</option><option>Sonstiges</option></select></label><label>Klassenstufe<select id="wsClass"><option>5–6</option><option>7–8</option><option>9–10</option><option>11–13</option></select></label></div><div class="two-col"><label>Schwierigkeit<select id="wsLevel"><option>Leicht</option><option>Mittel</option><option>Schwer</option></select></label><label>Aufgaben<input id="wsCount" type="number" min="3" max="20" value="8"></label></div><label><input type="checkbox" id="wsSolutions" checked> Lösungen separat mit erzeugen</label><button class="primary full" type="submit">✨ Mit KI erstellen</button></form></dialog>
+<dialog id="editorDialog"><div class="editor"><header><input id="editorTitle" value="Arbeitsblatt"><div><button class="secondary" id="saveEditor">Speichern</button><button class="secondary" id="exportEditor">Exportieren</button><button class="close" id="closeEditor">×</button></div></header><div class="editor-toolbar"><button data-cmd="bold"><b>B</b></button><button data-cmd="italic"><i>I</i></button><button data-cmd="underline"><u>U</u></button><button data-cmd="insertUnorderedList">• Liste</button><button data-cmd="justifyCenter">☷</button><button id="addPage">＋ Seite</button></div><div id="editor" class="document" contenteditable="true"></div></div></dialog>
+<dialog id="quizDialog"><form method="dialog" class="modal-form" id="quizForm"><button class="close" value="cancel">×</button><span class="eyebrow">QUIZ-GENERATOR</span><h2>Neues Quiz</h2><label>Thema<input id="quizTopic" required placeholder="z. B. Zellbiologie"></label><div class="two-col"><label>Fach<select id="quizSubject"><option>Mathematik</option><option>Deutsch</option><option>Englisch</option><option>Biologie</option><option>Physik</option><option>Geschichte</option><option>Geografie</option><option>Chemie</option><option>Informatik</option></select></label><label>Fragen<input id="quizCount" type="number" min="3" max="15" value="8"></label></div><button class="primary full" type="submit">🧠 Quiz erstellen</button></form></dialog>
+<script src="app.js"></script></body></html>
