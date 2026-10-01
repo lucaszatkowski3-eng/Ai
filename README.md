@@ -1,31 +1,44 @@
 # LernAI
 
-Eine deutschsprachige, interaktive KI-Lernplattform für alle Fächer.
+LernAI ist eine deutschsprachige KI-Lernplattform für Schule und selbstständiges Lernen.
 
-## Enthalten
-- KI-Lernchat mit kontextbezogenen Schnellaktionen
-- Arbeitsblatt-Generator
-- direkt bearbeitbarer Arbeitsblatt-Editor
-- lokale Speicherung im Browser
-- Export der Arbeitsblätter als HTML
-- interaktives Quiz mit sofortigem Feedback
-- vorbereitete Grafik-Funktion
-- responsive Oberfläche für PC, Tablet und Smartphone
+## Plattform-Funktionen
+- moderne öffentliche Startseite
+- Lern-Dashboard
+- KI-Lernchat mit Gesprächskontext
+- KI-Arbeitsblatt-Generator
+- direkt bearbeitbarer Editor mit Seiten-Trennung
+- Speichern im Browser
+- Export als HTML / über den Browser als PDF druckbar
+- KI-Quiz-Generator mit Auswertung
+- Lernfortschritt und letzte Aktivitäten
 - Dark-/Light-Mode
-- optionaler Serverless-KI-Endpunkt
+- responsive für Smartphone, Tablet und PC
+- API-Key bleibt serverseitig
 
-## Start
-Für die reine Oberfläche kann `index.html` direkt geöffnet oder über GitHub Pages veröffentlicht werden.
+## Hosting
 
-Für echte KI-Antworten braucht die App einen Server/API-Endpunkt. Der mitgelieferte `api/ai.js` ist für eine Vercel-artige Serverless-Umgebung vorbereitet. Dort wird `OPENAI_API_KEY` als geheime Umgebungsvariable gesetzt.
+**Ja, die Website kann über GitHub Pages veröffentlicht werden.** Das funktioniert für die öffentliche Oberfläche. Die echten KI-Funktionen aus `/api` benötigen zusätzlich eine Serverless-Umgebung wie Vercel, weil GitHub Pages kein serverseitiges JavaScript ausführt.
 
-**Wichtig:** Niemals einen API-Key in `app.js` oder andere Dateien des Frontends schreiben.
+Für die komplette Plattform ist Vercel mit dem GitHub-Repository am einfachsten:
 
-## Nächste Ausbaustufe
-- echte KI-generierte Arbeitsblätter und Quizze
-- Diagramm-/Grafik-Generator
-- PDF-Export
-- GoodNotes-ähnliche Zeichen-/Schreibfläche
-- Benutzerkonten und Cloud-Synchronisation
-- Lernfortschritt, Fächerprofile und personalisierte Wiederholung
-- Datei-/Bild-Upload für Aufgaben und Notizen
+1. Repository auf GitHub behalten.
+2. Projekt mit Vercel verbinden.
+3. `OPENAI_API_KEY` als geheime Environment Variable bei Vercel setzen.
+4. Optional `OPENAI_MODEL` setzen; Standard ist `gpt-5.6-luna`.
+5. Änderungen an `main` können automatisch neu veröffentlicht werden.
+
+Für eine rein statische Demo kann weiterhin GitHub Pages verwendet werden; dann bleiben KI-API-Funktionen ohne Backend deaktiviert.
+
+## Sicherheit
+
+Niemals den API-Key in `index.html`, `app.js` oder andere Frontend-Dateien schreiben. Er gehört ausschließlich in die Server-Umgebung.
+
+## Weitere Ausbaustufen
+- Login und Benutzerkonten
+- Cloud-Speicherung
+- echter PDF-Export
+- GoodNotes-ähnliches Zeichnen mit Stift/Touch
+- Bilder und Aufgaben hochladen
+- Lernpläne und personalisierte Wiederholungen
+- weitere Diagrammtypen und interaktive Lernvisualisierungen
